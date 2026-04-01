@@ -84,3 +84,49 @@
 #khungDoiMatKhau button:hover {
     background-color: rgb(120, 212, 120);
 }
+/* CSS cho nút Xuất hóa đơn */
+.btn-xuat-hoadon {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+.btn-xuat-hoadon:hover {
+    background-color: #0b7dda;
+}
+
+/* Ẩn các thành phần không cần thiết khi in hóa đơn */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #invoice-template, #invoice-template * {
+        visibility: visible;
+    }
+    #invoice-template {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+}
+/* Ẩn khung đổi mật khẩu mặc định */
+#khungDoiMatKhau {
+    display: none;
+}
+
+/* Hiển thị khi được kích hoạt class .active */
+#khungDoiMatKhau.active {
+    display: table-cell; /* Vì đây là thẻ td nên dùng table-cell */
+}
+
+/* Thêm một chút hiệu ứng cho khung (tùy chọn) */
+#khungDoiMatKhau table {
+    margin: 10px auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #f9f9f9;
+}

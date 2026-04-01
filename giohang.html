@@ -7,26 +7,47 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<link rel="shortcut icon" href="img/favicon.ico" />
 
-	<title>Thế giới điện thoại</title>
+	<title>Thế giới điện thoại - Giỏ hàng</title>
 
-	<!-- Load font awesome icons -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 	 crossorigin="anonymous">
 
-	<!-- our files -->
-	<!-- css -->
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/topnav.css">
 	<link rel="stylesheet" href="css/header.css">
 	<link rel="stylesheet" href="css/taikhoan.css">
 	<link rel="stylesheet" href="css/gioHang.css">
 	<link rel="stylesheet" href="css/footer.css">
-	<!-- js -->
 	<script src="data/products.js"></script>
 	<script src="js/classes.js"></script>
 	<script src="js/dungchung.js"></script>
 	<script src="js/giohang.js"></script>
 
+    <style>
+        /* CSS bổ sung cho form thanh toán */
+        #checkoutForm {
+            display: none;
+            max-width: 700px;
+            margin: 30px auto;
+            padding: 25px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        #checkoutForm h2 { text-align: center; color: #333; margin-bottom: 20px; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .btn-confirm { background-color: #17c671; color: white; border: none; padding: 12px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; }
+        .btn-confirm:hover { background-color: #14ad62; }
+    </style>
 </head>
 
 <body>
@@ -35,11 +56,30 @@
 	<section style="min-height: 85vh">
 		<script> addHeader(); </script>
 
-		<table class="listSanPham" > </table>
-		
-	</section> <!-- End Section -->
+		<table class="listSanPham"> </table>
 
-	<script>
+        <div id="checkoutForm">
+            <h2>Thông Tin Giao Hàng</h2>
+            <div class="input-group">
+                <label for="diachi">Địa chỉ nhận hàng:</label>
+                <input type="text" id="diachi" placeholder="Số nhà, tên đường, phường/xã, quận/huyện...">
+            </div>
+            <div class="input-group">
+                <label for="sdt">Số điện thoại liên lạc:</label>
+                <input type="tel" id="sdt" placeholder="Nhập số điện thoại của bạn">
+            </div>
+            <div class="input-group">
+                <label for="phuongthuc">Phương thức thanh toán:</label>
+                <select id="phuongthuc">
+                    <option value="Thanh toán khi nhận hàng (COD)">Thanh toán khi nhận hàng (COD)</option>
+                    <option value="Chuyển khoản ngân hàng">Chuyển khoản ngân hàng</option>
+                    <option value="Ví điện tử (Momo/ZaloPay)">Ví điện tử (Momo/ZaloPay)</option>
+                </select>
+            </div>
+            <button class="btn-confirm" onclick="xacNhanThanhToan()">XÁC NHẬN ĐẶT HÀNG</button>
+        </div>
+		
+	</section> <script>
 		addContainTaiKhoan();
 	</script>
 
