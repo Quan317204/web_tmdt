@@ -606,8 +606,8 @@ function addFooter() {
 
     <!-- ============== Footer ============= -->
     <div class="copy-right">
-        <p><a href="index.html">LDD Phone Store</a> - All rights reserved © 2021 - Designed by
-            <span style="color: #eee; font-weight: bold">group 15th</span></p>
+        <p><a href="index.html">QTH Phone Store</a> - All rights reserved © 2026 - Designed by
+            <span style="color: #eee; font-weight: bold">group 10</span></p>
     </div>`);
 }
 
@@ -615,92 +615,61 @@ function addFooter() {
 function addContainTaiKhoan() {
     document.write(`
 	<div class="containTaikhoan">
-        <span class="close" onclick="showTaiKhoan(false);">&times;</span>
         <div class="taikhoan">
-
+            <span class="close" onclick="showTaiKhoan(false);">&times;</span>
+            
             <ul class="tab-group">
                 <li class="tab active"><a href="#login">Đăng nhập</a></li>
-                <li class="tab"><a href="#signup">Đăng kí</a></li>
-            </ul> <!-- /tab group -->
+                <li class="tab"><a href="#signup">Đăng ký</a></li>
+            </ul>
 
             <div class="tab-content">
                 <div id="login">
-                    <h1>Chào mừng bạn trở lại!</h1>
-
+                    <h1>Chào mừng trở lại!</h1>
                     <form onsubmit="return logIn(this);">
-
                         <div class="field-wrap">
-                            <label>
-                                Tên đăng nhập<span class="req">*</span>
-                            </label>
+                            <label>Tên đăng nhập<span class="req">*</span></label>
                             <input name='username' type="text" required autocomplete="off" />
-                        </div> <!-- /user name -->
-
+                        </div>
                         <div class="field-wrap">
-                            <label>
-                                Mật khẩu<span class="req">*</span>
-                            </label>
+                            <label>Mật khẩu<span class="req">*</span></label>
                             <input name="pass" type="password" required autocomplete="off" />
-                        </div> <!-- pass -->
-
+                        </div>
                         <p class="forgot"><a href="#">Quên mật khẩu?</a></p>
+                        <button type="submit" class="button button-block">TIẾP TỤC</button>
+                    </form>
+                </div>
 
-                        <button type="submit" class="button button-block" />Tiếp tục</button>
-
-                    </form> <!-- /form -->
-
-                </div> <!-- /log in -->
-
-                <div id="signup">
-                    <h1>Đăng kí miễn phí</h1>
-
+                <div id="signup" style="display:none;">
+                    <h1>Đăng ký thành viên</h1>
                     <form onsubmit="return signUp(this);">
-
                         <div class="top-row">
                             <div class="field-wrap">
-                                <label>
-                                    Họ<span class="req">*</span>
-                                </label>
+                                <label>Họ<span class="req">*</span></label>
                                 <input name="ho" type="text" required autocomplete="off" />
                             </div>
-
                             <div class="field-wrap">
-                                <label>
-                                    Tên<span class="req">*</span>
-                                </label>
+                                <label>Tên<span class="req">*</span></label>
                                 <input name="ten" type="text" required autocomplete="off" />
                             </div>
-                        </div> <!-- / ho ten -->
-
+                        </div>
                         <div class="field-wrap">
-                            <label>
-                                Địa chỉ Email<span class="req">*</span>
-                            </label>
+                            <label>Email<span class="req">*</span></label>
                             <input name="email" type="email" required autocomplete="off" />
-                        </div> <!-- /email -->
-
+                        </div>
                         <div class="field-wrap">
-                            <label>
-                                Tên đăng nhập<span class="req">*</span>
-                            </label>
+                            <label>Tên đăng nhập<span class="req">*</span></label>
                             <input name="newUser" type="text" required autocomplete="off" />
-                        </div> <!-- /user name -->
-
+                        </div>
                         <div class="field-wrap">
-                            <label>
-                                Mật khẩu<span class="req">*</span>
-                            </label>
+                            <label>Mật khẩu<span class="req">*</span></label>
                             <input name="newPass" type="password" required autocomplete="off" />
-                        </div> <!-- /pass -->
-
-                        <button type="submit" class="button button-block" />Tạo tài khoản</button>
-
-                    </form> <!-- /form -->
-
-                </div> <!-- /sign up -->
-            </div><!-- tab-content -->
-
-        </div> <!-- /taikhoan -->
+                        </div>
+                        <button type="submit" class="button button-block">TẠO TÀI KHOẢN</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>`);
 }
 // Thêm plc (phần giới thiệu trước footer)
@@ -715,7 +684,7 @@ function addPlc() {
                 <li>Lỗi đổi tại nhà trong 1 ngày</li>
                 <li>Hỗ trợ suốt thời gian sử dụng.
                     <br>Hotline:
-                    <a href="tel:12345678" style="color: #288ad6;">12345678</a>
+                    <a href="tel:0962877252" style="color: #288ad6;">0962877252</a>
                 </li>
             </ul>
         </section>
