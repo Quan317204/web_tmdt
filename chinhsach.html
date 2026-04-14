@@ -33,6 +33,51 @@
     </script>
 
 </head>
+<style>
+    .page-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.policy-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.policy-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.policy-card h3 {
+    color: #007bff;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.policy-card i {
+    font-size: 22px;
+    margin-right: 8px;
+    color: #007bff;
+}
+
+.policy-card ul {
+    padding-left: 18px;
+}
+
+.policy-card li {
+    margin-bottom: 6px;
+}
+
+.policy-card p {
+    font-size: 14px;
+    line-height: 1.6;
+}
+</style>
 
 <body>
     <script> addTopNav();</script>
@@ -47,67 +92,91 @@
 
             <div class="page-info">
 
-                <h3>1. Chính sách sản phẩm</h3>
-                <p>
-                    Chúng tôi cam kết cung cấp các sản phẩm điện thoại di động chính hãng 100%, có nguồn gốc rõ ràng.
-                    Mỗi sản phẩm đều đi kèm hóa đơn và tem bảo hành đầy đủ. Thông tin về giá bán, cấu hình và tình trạng
-                    sản phẩm luôn được hiển thị minh bạch và chính xác.
-                </p>
+                <div class="policy-card">
+                    <h3><i class="fa fa-info-circle"></i> Giới thiệu</h3>
+                    <p>Chuyên cung cấp điện thoại chính hãng: Apple, Samsung, Xiaomi, OPPO, vivo...</p>
+                    <p>Sản phẩm mới 100%, có hóa đơn và bảo hành đầy đủ.</p>
+                </div>
 
-                <h3>2. Chính sách đặt hàng</h3>
-                <p>
-                    Khách hàng có thể đặt hàng trực tiếp trên website hoặc thông qua hotline. Đơn hàng sẽ được xác nhận
-                    khi thông tin khách hàng đầy đủ và sản phẩm còn trong kho. Chúng tôi có quyền từ chối các đơn hàng
-                    không hợp lệ hoặc có dấu hiệu gian lận.
-                </p>
+                <div class="policy-card">
+                    <h3><i class="fa fa-mobile"></i> Sản phẩm</h3>
+                    <ul>
+                        <li>Hàng chính hãng</li>
+                        <li>Có IMEI rõ ràng</li>
+                        <li>Đầy đủ phụ kiện</li>
+                        <li>Không trầy xước</li>
+                    </ul>
+                </div>
 
-                <h3>3. Chính sách thanh toán</h3>
-                <p>
-                    Hỗ trợ nhiều hình thức thanh toán: tiền mặt khi nhận hàng (COD), chuyển khoản ngân hàng, thẻ ATM nội địa
-                    và thẻ quốc tế (Visa/Mastercard). Một số đơn hàng giá trị cao có thể yêu cầu đặt cọc trước.
-                </p>
+                <div class="policy-card">
+                    <h3><i class="fa fa-tags"></i> Giá & Khuyến mãi</h3>
+                    <ul>
+                        <li>Giá niêm yết minh bạch</li>
+                        <li>Mã giảm giá</li>
+                        <li>Quà tặng kèm</li>
+                        <li>Ưu đãi trả góp</li>
+                    </ul>
+                </div>
 
-                <h3>4. Chính sách giao hàng</h3>
-                <p>
-                    Chúng tôi giao hàng trên toàn quốc. Thời gian giao hàng từ 1–24 giờ đối với nội thành và từ 2–5 ngày
-                    đối với các khu vực khác. Khách hàng được kiểm tra sản phẩm trước khi thanh toán.
-                </p>
+                <div class="policy-card">
+                    <h3><i class="fa fa-shopping-cart"></i> Đặt hàng</h3>
+                    <ul>
+                        <li>Chọn sản phẩm</li>
+                        <li>Thêm vào giỏ</li>
+                        <li>Nhập thông tin</li>
+                        <li>Xác nhận đơn</li>
+                    </ul>
+                </div>
 
-                <h3>5. Chính sách bảo hành</h3>
-                <p>
-                    Sản phẩm được bảo hành từ 6–24 tháng theo quy định của nhà sản xuất. Áp dụng bảo hành với các lỗi kỹ thuật
-                    do nhà sản xuất. Không áp dụng cho các trường hợp hư hỏng do tác động bên ngoài như rơi vỡ, vào nước.
-                </p>
+                <div class="policy-card">
+                    <h3><i class="fa fa-credit-card"></i> Thanh toán</h3>
+                    <ul>
+                        <li>COD</li>
+                        <li>Chuyển khoản</li>
+                        <li>Ví điện tử</li>
+                        <li>Trả góp</li>
+                    </ul>
+                </div>
 
-                <h3>6. Chính sách đổi trả</h3>
-                <p>
-                    Hỗ trợ đổi trả trong vòng 7–30 ngày nếu sản phẩm có lỗi từ nhà sản xuất. Sản phẩm đổi trả phải còn nguyên vẹn,
-                    đầy đủ hộp và phụ kiện đi kèm.
-                </p>
+                <div class="policy-card">
+                    <h3><i class="fa fa-truck"></i> Giao hàng</h3>
+                    <ul>
+                        <li>Toàn quốc</li>
+                        <li>Nội thành: 1–2 ngày</li>
+                        <li>Tỉnh: 2–5 ngày</li>
+                    </ul>
+                </div>
 
-                <h3>7. Chính sách trả góp</h3>
-                <p>
-                    Hỗ trợ trả góp qua công ty tài chính hoặc thẻ tín dụng với lãi suất ưu đãi (có thể 0%). Thủ tục nhanh chóng,
-                    chỉ cần CCCD/CMND hợp lệ.
-                </p>
+                <div class="policy-card">
+                    <h3><i class="fa fa-shield"></i> Bảo hành</h3>
+                    <ul>
+                        <li>Có hóa đơn</li>
+                        <li>Còn thời hạn</li>
+                        <li>Lỗi từ NSX</li>
+                    </ul>
+                </div>
 
-                <h3>8. Chính sách bảo mật</h3>
-                <p>
-                    Chúng tôi cam kết bảo mật tuyệt đối thông tin cá nhân của khách hàng và không chia sẻ cho bên thứ ba khi
-                    chưa có sự đồng ý.
-                </p>
+                <div class="policy-card">
+                    <h3><i class="fa fa-refresh"></i> Đổi trả</h3>
+                    <ul>
+                        <li>24h lỗi giao hàng</li>
+                        <li>7 ngày lỗi kỹ thuật</li>
+                        <li>Đầy đủ hộp</li>
+                    </ul>
+                </div>
 
-                <h3>9. Chính sách khuyến mãi</h3>
-                <p>
-                    Các chương trình khuyến mãi như giảm giá, tặng quà hoặc trả góp ưu đãi sẽ được áp dụng theo từng thời điểm.
-                    Nội dung có thể thay đổi mà không cần báo trước.
-                </p>
+                <div class="policy-card">
+                    <h3><i class="fa fa-lock"></i> Bảo mật</h3>
+                    <p>Thông tin khách hàng được bảo mật tuyệt đối.</p>
+                </div>
 
-                <h3>10. Khiếu nại & hỗ trợ</h3>
-                <p>
-                    Mọi thắc mắc hoặc khiếu nại, khách hàng có thể liên hệ qua hotline hoặc email. Chúng tôi cam kết xử lý trong
-                    vòng 24–72 giờ làm việc và đảm bảo quyền lợi tốt nhất cho khách hàng.
-                </p>
+                <div class="policy-card">
+                    <h3><i class="fa fa-headphones"></i> Hỗ trợ</h3>
+                    <ul>
+                        <li>Hotline: 1234543</li>
+                        <li>Email: support@shop.com</li>
+                    </ul>
+                </div>
 
             </div>
         </div>

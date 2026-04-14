@@ -47,6 +47,22 @@
         }
         .btn-confirm { background-color: #17c671; color: white; border: none; padding: 12px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; }
         .btn-confirm:hover { background-color: #14ad62; }
+
+        /* --- CSS THÊM MỚI CHO PHẦN PHƯƠNG THỨC THANH TOÁN --- */
+        .payment-details {
+            display: none; /* Ẩn mặc định */
+            margin-top: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px dashed #ccc;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .payment-details.active {
+            display: block; /* Hiện khi được thêm class active */
+        }
+        .qr-code { text-align: center; }
+        .qr-code img { max-width: 200px; margin-top: 10px; }
     </style>
 </head>
 
@@ -60,6 +76,12 @@
 
         <div id="checkoutForm">
             <h2>Thông Tin Giao Hàng</h2>
+            
+            <div class="input-group">
+                <label for="tenkh">Tên khách hàng:</label>
+                <input type="text" id="tenkh" placeholder="Nhập tên người nhận hàng">
+            </div>
+
             <div class="input-group">
                 <label for="diachi">Địa chỉ nhận hàng:</label>
                 <input type="text" id="diachi" placeholder="Số nhà, tên đường, phường/xã, quận/huyện...">
@@ -68,15 +90,44 @@
                 <label for="sdt">Số điện thoại liên lạc:</label>
                 <input type="tel" id="sdt" placeholder="Nhập số điện thoại của bạn">
             </div>
+            
             <div class="input-group">
                 <label for="phuongthuc">Phương thức thanh toán:</label>
-                <select id="phuongthuc">
-                    <option value="Thanh toán khi nhận hàng (COD)">Thanh toán khi nhận hàng (COD)</option>
-                    <option value="Chuyển khoản ngân hàng">Chuyển khoản ngân hàng</option>
-                    <option value="Ví điện tử (Momo/ZaloPay)">Ví điện tử (Momo/ZaloPay)</option>
-                    <option value="Trả góp">Trả góp</option>
+                <select id="phuongthuc" onchange="hienThiChiTietThanhToan()">
+                    <option value="cod">Thanh toán khi nhận hàng (COD)</option>
+                    <option value="card">Thanh toán bằng thẻ Ngân hàng / Visa</option>
+                    <option value="qrcode">Quét mã QR Code (Momo/ZaloPay/App Ngân hàng)</option>
                 </select>
             </div>
+
+            <div id="payment-card" class="payment-details">
+                <h4><i class="fa fa-credit-card"></i> Thông tin thẻ:</h4>
+                <div class="input-group">
+                    <input type="text" placeholder="Số thẻ">
+                </div>
+                <div class="input-group">
+                    <input type="text" placeholder="Tên in trên thẻ">
+                </div>
+                <div class="input-group" style="display: flex; gap: 10px;">
+                    <input type="text" placeholder="Ngày hết hạn (MM/YY)">
+                    <input type="text" placeholder="Mã CVV">
+                </div>
+            </div>
+            
+            <div id="payment-qrcode" class="payment-details qr-code">
+                    <h4><i class="fa fa-qrcode"></i> Quét mã QR bằng App Ngân hàng:</h4>
+                    
+                    <img id="img-qrcode" src="" alt="Mã QR Vietcombank" style="max-width: 250px; border: 1px solid #ddd; border-radius: 8px; padding: 5px;">
+                    
+                    <div style="text-align: left; margin: 15px auto; max-width: 300px; padding: 10px; background: #f1f1f1; border-radius: 5px; border-left: 5px solid #00703c;">
+                        <p>Ngân hàng: <b>Vietcombank (VCB)</b></p>
+                        <p>Số tài khoản: <b>9962877252</b></p>
+                        <p>Chủ TK: <b>LA MINH QUAN</b></p>
+                        <p>Số tiền: <b id="qr-amount" style="color: red; font-size: 1.1em;">0 ₫</b></p>
+                        <p>Nội dung: <b id="nd-chuyenkhoan" style="color: blue;"></b></p>
+                    </div>
+                </div>
+
             <button class="btn-confirm" onclick="xacNhanThanhToan()">XÁC NHẬN ĐẶT HÀNG</button>
         </div>
 		

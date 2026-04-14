@@ -100,15 +100,23 @@ function checkAll(source) {
 }
 
 function thanhToan() {
-	if (!currentuser.products.length) {
-		addAlertBox('Giỏ hàng trống!', '#ffb400', '#fff', 2000); return;
-	}
+    if (!currentuser.products.length) {
+        addAlertBox('Giỏ hàng trống!', '#ffb400', '#fff', 2000); return;
+    }
     
-    // Kiểm tra xem có tích chọn sản phẩm nào không
     var checkboxes = document.getElementsByClassName('cart-checkbox');
     var anyChecked = false;
+    var totalToPay = 0; // Biến tính tổng tiền
+
     for (var i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].checked) { anyChecked = true; break; }
+        if (checkboxes[i].checked) { 
+            anyChecked = true; 
+            var index = parseInt(checkboxes[i].getAttribute('data-index'));
+            var p_cart = currentuser.products[index];
+            var p_info = timKiemTheoMa(list_products, p_cart.ma);
+            var price = (p_info.promo.name == 'giareonline' ? p_info.promo.value : p_info.price);
+            totalToPay += stringToNum(price) * p_cart.soluong;
+        }
     }
 
     if (!anyChecked) {
@@ -117,17 +125,66 @@ function thanhToan() {
 
     document.getElementById('checkoutForm').style.display = 'block';
     document.getElementById('checkoutForm').scrollIntoView({ behavior: 'smooth' });
+
+    // Hiển thị tên
+    document.getElementById('tenkh').value = currentuser.hoTen || currentuser.username || "";
+
+    // Ghi số tiền ra giao diện text
+    document.getElementById('qr-amount').innerText = numToString(totalToPay) + " ₫";
+    
+    // Tạo nội dung chuyển khoản (Viết liền không dấu để chuẩn form ngân hàng)
+    var noiDungCK = "THANHTOAN " + (currentuser.username).toUpperCase();
+    document.getElementById('nd-chuyenkhoan').innerText = noiDungCK;
+
+    // ====== TẠO MÃ QR ĐỘNG TỰ ĐIỀN TIỀN & NỘI DUNG ======
+    // API Cấu trúc: https://img.vietqr.io/image/<Mã_Ngân_hàng>-<STK>-<Template>.png?amount=<Số_Tiền>&addInfo=<Nội_dung>&accountName=<Tên_Chủ_TK>
+    
+    var bankID = "vietcombank";
+    var accountNo = "9962877252";
+    var accountName = "LA MINH QUAN"; // Đổi lại tên thật không dấu của bạn nếu muốn
+    
+    // Dùng encodeURIComponent để mã hóa khoảng trắng và kí tự đặc biệt trong URL
+    var qrApiUrl = `https://img.vietqr.io/image/${bankID}-${accountNo}-compact2.png?amount=${totalToPay}&addInfo=${encodeURIComponent(noiDungCK)}&accountName=${encodeURIComponent(accountName)}`;
+    
+    // Gắn link ảnh QR vừa tạo vào thẻ img
+    document.getElementById('img-qrcode').src = qrApiUrl;
+
+    hienThiChiTietThanhToan(); 
+}
+// Hàm hiển thị các UI phụ thuộc vào phương thức thanh toán
+function hienThiChiTietThanhToan() {
+    var phuongThuc = document.getElementById('phuongthuc').value;
+    
+    // Ẩn tất cả các form thanh toán chi tiết
+    var details = document.getElementsByClassName('payment-details');
+    for(var i = 0; i < details.length; i++) {
+        details[i].classList.remove('active');
+    }
+    
+    // Kiểm tra giá trị được chọn và hiển thị form tương ứng
+    if(phuongThuc === 'card') {
+        document.getElementById('payment-card').classList.add('active');
+    } else if(phuongThuc === 'qrcode') {
+        document.getElementById('payment-qrcode').classList.add('active');
+    }
 }
 
 function xacNhanThanhToan() {
+    var tenKhachHang = document.getElementById('tenkh').value;
     var diachi = document.getElementById('diachi').value;
     var sdt = document.getElementById('sdt').value;
-    if (!diachi || !sdt) { alert("Vui lòng nhập đầy đủ thông tin giao hàng!"); return; }
+    var dropdownThanhToan = document.getElementById('phuongthuc');
+    var kieuThanhToanText = dropdownThanhToan.options[dropdownThanhToan.selectedIndex].text;
 
-    if (window.confirm('Xác nhận đặt các sản phẩm đã chọn?')) {
+    if (!tenKhachHang || !diachi || !sdt) { 
+        alert("Vui lòng nhập đầy đủ thông tin!"); return; 
+    }
+
+    if (window.confirm('Xác nhận đặt hàng?')) {
         var checkboxes = document.getElementsByClassName('cart-checkbox');
         var spThanhToan = [];
         var spGiuLai = [];
+        var tongTienDonHang = 0; // Biến để chốt tổng tiền
 
         for (var i = 0; i < currentuser.products.length; i++) {
             var isChecked = false;
@@ -136,19 +193,33 @@ function xacNhanThanhToan() {
                     isChecked = true; break;
                 }
             }
-            if (isChecked) spThanhToan.push(currentuser.products[i]);
-            else spGiuLai.push(currentuser.products[i]);
+            if (isChecked) {
+                var p = currentuser.products[i];
+                var p_info = timKiemTheoMa(list_products, p.ma);
+                var giaBan = (p_info.promo.name == 'giareonline' ? p_info.promo.value : p_info.price);
+                
+                // Cộng dồn vào tổng tiền đơn hàng
+                tongTienDonHang += stringToNum(giaBan) * p.soluong;
+                
+                spThanhToan.push(p);
+            } else {
+                spGiuLai.push(currentuser.products[i]);
+            }
         }
 
+        // Lưu đơn hàng với số tiền CỐ ĐỊNH
         currentuser.donhang.push({
             "sp": spThanhToan,
             "ngaymua": new Date(),
             "tinhTrang": 'Đang chờ xử lý',
+            "tenKhachHang": tenKhachHang,
             "diachi": diachi,
-            "sdt": sdt
+            "sdt": sdt,
+            "phuongThuc": kieuThanhToanText,
+            "tongTien": tongTienDonHang // Chốt số tiền tại đây
         });
 
-        currentuser.products = spGiuLai; // Chỉ giữ lại sản phẩm chưa thanh toán
+        currentuser.products = spGiuLai;
         capNhatMoiThu();
         document.getElementById('checkoutForm').style.display = 'none';
         addAlertBox('Đặt hàng thành công!', '#17c671', '#fff', 4000);

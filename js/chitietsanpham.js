@@ -113,6 +113,8 @@ function phanTich_URL_chiTietSanPham() {
         center: true,
         smartSpeed: 450,
     });
+    setupStarRating();
+    renderComments();
 }
 
 // Chi tiết khuyến mãi
@@ -256,4 +258,109 @@ function suggestion(){
         let div = document.getElementById('goiYSanPham');
         addKhungSanPham(sanPhamTuongTu, 'Bạn có thể thích', ['#434aa8', '#ec1f1f'], div);
     }
+}
+
+// ================= CÁC HÀM XỬ LÝ BÌNH LUẬN VÀ ĐÁNH GIÁ ================= 
+
+var currentRating = 0; // Biến lưu số sao đang chọn
+
+// 1. Cài đặt sự kiện khi click vào các ngôi sao
+function setupStarRating() {
+    var stars = document.querySelectorAll('#star-rating i');
+    stars.forEach(function(star) {
+        star.addEventListener('click', function() {
+            currentRating = parseInt(this.getAttribute('data-index'));
+            // Reset tất cả về sao rỗng
+            stars.forEach(s => {
+                s.classList.remove('fa-star');
+                s.classList.add('fa-star-o');
+            });
+            // Tô màu các sao được chọn
+            for(var i = 0; i < currentRating; i++) {
+                stars[i].classList.remove('fa-star-o');
+                stars[i].classList.add('fa-star');
+            }
+        });
+    });
+}
+
+// 2. Hàm gửi bình luận
+function submitComment() {
+    var user = getCurrentUser(); // Hàm lấy thông tin user đã đăng nhập (có sẵn ở dungchung.js)
+    if (!user) {
+        alert('Bạn cần đăng nhập để gửi bình luận!');
+        return;
+    }
+
+    if (currentRating === 0) {
+        alert('Vui lòng chọn số sao để đánh giá sản phẩm!');
+        return;
+    }
+
+    var text = document.getElementById('comment-text').value.trim();
+    if (text === '') {
+        alert('Vui lòng nhập nội dung bình luận!');
+        return;
+    }
+
+    // Lấy dữ liệu bình luận từ LocalStorage dựa trên Mã sản phẩm
+    var storageKey = 'comments_' + maProduct;
+    var comments = JSON.parse(window.localStorage.getItem(storageKey)) || [];
+    
+    // Tạo object bình luận mới
+    var newComment = {
+        user: user.hoTen || user.username,
+        rating: currentRating,
+        content: text,
+        date: new Date().toLocaleString('vi-VN')
+    };
+    
+    // Lưu vào LocalStorage
+    comments.push(newComment);
+    window.localStorage.setItem(storageKey, JSON.stringify(comments));
+
+    // Reset lại form
+    document.getElementById('comment-text').value = '';
+    currentRating = 0;
+    var stars = document.querySelectorAll('#star-rating i');
+    stars.forEach(s => {
+        s.classList.remove('fa-star');
+        s.classList.add('fa-star-o');
+    });
+
+    alert('Cảm ơn bạn đã đánh giá sản phẩm!');
+    renderComments(); // Cập nhật lại UI
+}
+
+// 3. Hàm hiển thị bình luận ra màn hình
+function renderComments() {
+    var commentList = document.getElementById('comment-list');
+    var storageKey = 'comments_' + maProduct;
+    var comments = JSON.parse(window.localStorage.getItem(storageKey)) || [];
+    
+    if (comments.length === 0) {
+        commentList.innerHTML = '<p style="color:#777; font-style:italic;">Chưa có bình luận nào. Hãy là người đầu tiên đánh giá sản phẩm này!</p>';
+        return;
+    }
+
+    var html = '';
+    // Lặp ngược mảng để bình luận mới nhất hiển thị lên đầu
+    for (var i = comments.length - 1; i >= 0; i--) {
+        var c = comments[i];
+        var starHtml = '';
+        for(var j = 1; j <= 5; j++) {
+            if (j <= c.rating) starHtml += '<i class="fa fa-star"></i>';
+            else starHtml += '<i class="fa fa-star-o"></i>';
+        }
+
+        html += `
+            <div class="comment-item">
+                <span class="user-name"><i class="fa fa-user-circle"></i> ` + c.user + `</span>
+                <span class="user-stars">` + starHtml + `</span>
+                <span class="comment-date">` + c.date + `</span>
+                <div class="comment-content">` + c.content + `</div>
+            </div>
+        `;
+    }
+    commentList.innerHTML = html;
 }

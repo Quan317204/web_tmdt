@@ -106,6 +106,25 @@
                     </div>
                 </div>
             </div>
+            <div class="comment-section">
+                <h2>Bình luận & Đánh giá sản phẩm</h2>
+                
+                <div class="comment-form">
+                    <p style="margin-bottom: 5px;">Chọn đánh giá của bạn:</p>
+                    <div class="stars" id="star-rating">
+                        <i class="fa fa-star-o" data-index="1"></i>
+                        <i class="fa fa-star-o" data-index="2"></i>
+                        <i class="fa fa-star-o" data-index="3"></i>
+                        <i class="fa fa-star-o" data-index="4"></i>
+                        <i class="fa fa-star-o" data-index="5"></i>
+                    </div>
+                    <textarea id="comment-text" placeholder="Mời bạn để lại bình luận và nhận xét về sản phẩm..."></textarea>
+                    <button onclick="submitComment()">GỬI BÌNH LUẬN</button>
+                </div>
+                
+                <div id="comment-list">
+                    </div>
+            </div>
         </div>
 
         <div id="goiYSanPham"></div>

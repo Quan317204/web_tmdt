@@ -91,13 +91,19 @@ function addTatCaDonHang(user) {
         listDiv.innerHTML = `<h3 style="padding: 50px; color: green; text-align: center">Xin chào ${user.username}. Bạn chưa có đơn hàng nào.</h3>`;
         return;
     }
+    
     listDiv.innerHTML = ""; // Clear trước khi vẽ
-    for (var i = 0; i < user.donhang.length; i++) {
+    
+    // SỬA TẠI ĐÂY: Chạy vòng lặp ngược từ cuối mảng về 0
+    // Điều này giúp đơn hàng mới nhất (nằm ở cuối) được render ra HTML đầu tiên
+    // đồng thời vẫn giữ nguyên được giá trị 'i' (index gốc) cho hàm xuatHoaDon(index)
+    for (var i = user.donhang.length - 1; i >= 0; i--) {
         addDonHang(user.donhang[i], i);
     }
 }
 
 function addDonHang(dh, index) {
+    
     var div = document.getElementsByClassName('listDonHang')[0];
     var s = `
             <table class="listSanPham">
@@ -172,7 +178,7 @@ function xuatHoaDon(index) {
     var invoiceHTML = `
         <div style="width:700px; margin:auto; font-family:Arial; border:1px solid #000; padding:20px;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <div><h1 style="color:#17c671; margin:0;">LDD PHONE STORE</h1><p>Hệ thống bán lẻ điện thoại toàn quốc</p></div>
+                <div><h1 style="color:#17c671; margin:0;">TechMobile Store</h1><p>Hệ thống bán lẻ điện thoại toàn quốc</p></div>
                 <div style="text-align:right;"><p>Số hóa đơn: #HD${new Date(dh.ngaymua).getTime()}</p><p>Ngày: ${new Date().toLocaleDateString()}</p></div>
             </div>
             <hr>
@@ -204,7 +210,7 @@ function xuatHoaDon(index) {
         </div>`;
 
     var win = window.open('', '_blank');
-    win.document.write(`<html><head><title>Hóa đơn - LDD Phone</title></head><body>${invoiceHTML}</body></html>`);
+    win.document.write(`<html><head><title>Hóa đơn - TechMobile Store</title></head><body>${invoiceHTML}</body></html>`);
     win.document.close();
     setTimeout(() => { win.print(); win.close(); }, 500);
 }
